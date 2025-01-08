@@ -1,0 +1,22 @@
+This is the file the gives quick explaination of the classes and functionsl
+
+*install revlibrary from official website
+
+Functions class - class that stores custom functions that are not foun in the starndard library
+
+
+Servo class -  class that creates servo conneted to RoboRio
+
+SparkMax class - class for controling motors
+
+INFO: 
+led status: https://docs.revrobotics.com/brushless/spark-max/status-led
+
+    *Input Voltage (nominal): 12V
+    *Operating Voltage Range: 5.5V - 24V
+    *Absolute Maximum Voltage: 30V
+    *Continuous Current: 60A
+    *Peak Current (2 second surge): 100A
+    *Dimensions: 70mm x 35mm x 25.5mm (2.756in x 1.378in x 1.004in)
+    *Weight: 0.25lbs (113.3g)
+

@@ -1,0 +1,3 @@
+Figure out Test mode, for testing motor while not in autonomus or teleop
+
+easy dashboard library

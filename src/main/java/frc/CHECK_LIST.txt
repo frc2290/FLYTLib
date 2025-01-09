@@ -1,3 +1,9 @@
 Figure out Test mode, for testing motor while not in autonomus or teleop
 
 easy dashboard library
+
+Limit Switch figure out
+What is alternateencoder
+https://codedocs.revrobotics.com/java/com/revrobotics/spark/config/alternateencoderconfig.type
+Warpping stuff pid
+https://codedocs.revrobotics.com/java/com/revrobotics/spark/config/closedloopconfig#d(double)

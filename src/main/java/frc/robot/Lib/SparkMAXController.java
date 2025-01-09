@@ -3,6 +3,7 @@ package frc.robot.Lib;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.config.MAXMotionConfig;
 import com.revrobotics.spark.config.SoftLimitConfig;
 import com.revrobotics.spark.config.SparkBaseConfig;
@@ -17,6 +18,7 @@ public class SparkMAXController {
     SparkBaseConfig config;
     SoftLimitConfig softLimitConfig;
     MAXMotionConfig motionConfig;
+    ClosedLoopConfig closedLoopConfig;
 
     SparkMax sparkmax;
 
@@ -71,29 +73,7 @@ public class SparkMAXController {
     /*
      * GETTERS
      */
-/*
-    //returns value in rotations
-    public double getAbsPos(){
-        return relEncoder.getPosition();
-    }
-    //returns value in rotations
-    public double getAbsVel(){
-        return relEncoder.getVelocity();
-    }
-    
-    //returns value in rotations
-    public double getRelPosition(){
-        return absEncoder.getPosition();
-    }
-    //returns value in "RPM"
-    public double getRelVelocity(){
-        return absEncoder.getVelocity();
-    }
-    //relative encoders have no "home", so we can set it
-    public void setEncoderPos(double pos){
-        relEncoder.setPosition(pos);
-    }
-*/
+
 
     //get motor position
     public double getPos(){
@@ -126,9 +106,7 @@ public class SparkMAXController {
     }
 
 
-
-
-/*
+    /*
     * SETTERS
     */
 
@@ -142,12 +120,46 @@ public class SparkMAXController {
     sparkmax.setVoltage(value);
     }
 
-
-
     //disable motor
     public void disable(){
     sparkmax.disable();
     }
+
+
+
+
+
+
+
+
+    /*
+     * Encoders
+     */
+    
+
+    /*
+    //returns value in rotations
+    public double getAbsPos(){
+        return relEncoder.getPosition();
+    }
+    //returns value in rotations
+    public double getAbsVel(){
+        return relEncoder.getVelocity();
+    }
+    
+    //returns value in rotations
+    public double getRelPosition(){
+        return absEncoder.getPosition();
+    }
+    //returns value in "RPM"
+    public double getRelVelocity(){
+        return absEncoder.getVelocity();
+    }
+    //relative encoders have no "home", so we can set it
+    public void setEncoderPos(double pos){
+        relEncoder.setPosition(pos);
+    }
+*/
 
 
     /*
@@ -163,6 +175,82 @@ public class SparkMAXController {
         motionConfig.maxAcceleration(acc);
     }
 
+    //allowed closed loop error
+    public void allowedErr(double err){
+        motionConfig.allowedClosedLoopError(err);
+        updateMotionControl(motionConfig);
+    }
+
+    //set motion control mode
+    public void posMode(){
+        motionConfig.positionMode(MAXMotionConfig.MAXMotionPositionMode.kMAXMotionTrapezoidal);
+        updateMotionControl(motionConfig);
+    }
+   
+
+
+
+    /*
+     * Motion Control
+     * https://codedocs.revrobotics.com/java/com/revrobotics/spark/config/closedloopconfig#d(double)
+     */
+
+     //set PID and velocity feedforward
+     public void PIDF(double p, double i, double d, double f){
+        closedLoopConfig.pidf(p, i, d, f);
+        updateClosedLoopController(closedLoopConfig);
+     }
+
+    //set PID
+    public void PID(double p, double i, double d){
+        closedLoopConfig.pid(p, i, d);
+        updateClosedLoopController(closedLoopConfig);
+    }
+
+    //prevents sets up izone
+    public void Izone(double zone){
+        closedLoopConfig.iZone(zone);
+        updateClosedLoopController(closedLoopConfig);
+    }
+
+    //min output
+    public void minOut(double min){
+        closedLoopConfig.minOutput(min);
+        updateClosedLoopController(closedLoopConfig);
+    }
+
+    //max output
+    public void maxOut(double max){
+        closedLoopConfig.maxOutput(max);
+        updateClosedLoopController(closedLoopConfig);
+    }
+
+    //min and max output range
+    public void outputRange(double min, double max){
+        closedLoopConfig.outputRange(min, max);
+        updateClosedLoopController(closedLoopConfig);
+    }
+
+    //antiwindup thingy
+    public void IMaxAccum(double max){
+        closedLoopConfig.iMaxAccum(max);
+        updateClosedLoopController(closedLoopConfig);
+    }
+
+    //feedback sensor type
+    public void feedbackSensor(int type){
+        if(type == 0)
+            closedLoopConfig.feedbackSensor(ClosedLoopConfig.FeedbackSensor.kNoSensor);
+        else if(type == 1)
+            closedLoopConfig.feedbackSensor(ClosedLoopConfig.FeedbackSensor.kPrimaryEncoder);
+        else if(type == 2)
+            closedLoopConfig.feedbackSensor(ClosedLoopConfig.FeedbackSensor.kAbsoluteEncoder);
+        else if(type == 3)
+            closedLoopConfig.feedbackSensor(ClosedLoopConfig.FeedbackSensor.kAlternateOrExternalEncoder);
+        else if(type == 4)
+            closedLoopConfig.feedbackSensor(ClosedLoopConfig.FeedbackSensor.kAnalogSensor);
+        updateClosedLoopController(closedLoopConfig);
+    }
 
 
 
@@ -170,7 +258,7 @@ public class SparkMAXController {
     * Soft Limits
     */
 
-//current limit functions
+    //current limit functions
     public void currentLimit(int stallLimit){
         config.smartCurrentLimit(stallLimit);
         updateController();
@@ -221,7 +309,6 @@ public class SparkMAXController {
         updateController();
     }
 
-
     //set the motor to brake mode or coast mode
     public void idleMode(boolean breakMode){
         if(breakMode)
@@ -244,12 +331,18 @@ public class SparkMAXController {
         sparkmax.configure(config, SparkMax.ResetMode.kResetSafeParameters, SparkMax.PersistMode.kPersistParameters); 
     }
 
+    //updates the controller with new soft limit config
     private void updateCfgController(SoftLimitConfig configuration){
         config.apply(configuration);
         updateController();
     }
-    private void updateCfgController(MAXMotionConfig configuration){
+    
+    private void updateClosedLoopController(ClosedLoopConfig configuration){
         config.apply(configuration);
         updateController();
+    }
+    //updates the controller with new motion control config
+    private void updateMotionControl(MAXMotionConfig configuration){
+        closedLoopConfig.apply(configuration);
     }
 }

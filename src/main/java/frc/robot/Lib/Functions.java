@@ -1,3 +1,4 @@
+package frc.robot.Lib;
 import java.lang.Math;
 
 public class Functions {

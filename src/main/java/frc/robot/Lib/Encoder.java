@@ -1,4 +1,4 @@
-package frc.robot.Lib Control;
+package frc.robot.Lib;
 
 public class Encoder {
     

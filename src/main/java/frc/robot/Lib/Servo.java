@@ -1,4 +1,7 @@
+package frc.robot.Lib;
+
 public class Servo {
+    Servo servo;
     
     //constructor, takes in the id of the servo (pin number? CHECK!)
     Servo(int id) {

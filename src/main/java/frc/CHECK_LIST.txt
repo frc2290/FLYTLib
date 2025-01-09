@@ -3,7 +3,10 @@ Figure out Test mode, for testing motor while not in autonomus or teleop
 easy dashboard library
 
 Limit Switch figure out
-What is alternateencoder
-https://codedocs.revrobotics.com/java/com/revrobotics/spark/config/alternateencoderconfig.type
+add limit interrupr if we want
 Warpping stuff pid
 https://codedocs.revrobotics.com/java/com/revrobotics/spark/config/closedloopconfig#d(double)
+
+Figure out the encoder stuff
+
+add flux motor controller

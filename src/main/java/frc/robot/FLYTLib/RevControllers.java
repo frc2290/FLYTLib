@@ -1,9 +1,11 @@
-package frc.robot.Lib;
+package frc.robot.FLYTLib;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig;
+import com.revrobotics.spark.config.EncoderConfig;
 import com.revrobotics.spark.config.MAXMotionConfig;
 import com.revrobotics.spark.config.SoftLimitConfig;
 import com.revrobotics.spark.config.SparkBaseConfig;
@@ -11,7 +13,7 @@ import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkMax;
 
 
-public class SparkMAXController {
+public class RevControllers {
 
     AbsoluteEncoder absEncoder;
     RelativeEncoder relEncoder;
@@ -19,38 +21,42 @@ public class SparkMAXController {
     SoftLimitConfig softLimitConfig;
     MAXMotionConfig motionConfig;
     ClosedLoopConfig closedLoopConfig;
-
+    AbsoluteEncoderConfig absEncoderConfig;
+    EncoderConfig encoderConfig;
     SparkMax sparkmax;
 
+
     //defult motor encoder
-    public SparkMAXController(int id, boolean brushless) {
+    public RevControllers(int id, boolean brushless) {
 
         //checks if we want to control brushed or brushless motor
         //true for brushless, false for brushed
         if(brushless)
         {
-            SparkMax sparkmax = new SparkMax(id, MotorType.kBrushless);
+            sparkmax = new SparkMax(id, MotorType.kBrushless);
         }
         else
         {
-            SparkMax sparkmax = new SparkMax(id, MotorType.kBrushed);
+            sparkmax = new SparkMax(id, MotorType.kBrushed);
         }
     
+        //movement soft limits disabled
         reverseSoftLimitEnabled(false);
+        farwardSoftLimitEnabled(false);
     }
 
     //connected encoders
-    public SparkMAXController(int id, boolean brushless, boolean encodertype) {
+    public RevControllers(int id, boolean brushless, boolean encodertype) {
 
         //checks if we want to control brushed or brushless motor
         //true for brushless, false for brushed
         if(brushless)
         {
-            SparkMax sparkmax = new SparkMax(id, MotorType.kBrushless);
+            sparkmax = new SparkMax(id, MotorType.kBrushless);
         }
         else
         {
-            SparkMax sparkmax = new SparkMax(id, MotorType.kBrushed);
+            sparkmax = new SparkMax(id, MotorType.kBrushed);
         }
 
         if(encodertype)
@@ -59,12 +65,12 @@ public class SparkMAXController {
         }
         else
         {
-            relEncoder = sparkmax.getEncoder();
+            relEncoder = sparkmax.getAlternateEncoder();
         }
 
+        //movement soft limits disabled
         reverseSoftLimitEnabled(false);
-    
-
+        farwardSoftLimitEnabled(false);
     }
 
 
@@ -134,19 +140,34 @@ public class SparkMAXController {
 
     /*
      * Encoders
+     * https://codedocs.revrobotics.com/java/com/revrobotics/spark/config/absoluteencoderconfig#zeroCentered(boolean)
+     * https://codedocs.revrobotics.com/java/com/revrobotics/spark/config/encoderconfig
      */
-    
 
-    /*
+
+    
     //returns value in rotations
-    public double getAbsPos(){
+    private double getAbsPos(){
         return relEncoder.getPosition();
     }
+
     //returns value in rotations
-    public double getAbsVel(){
+    private double getAbsVel(){
         return relEncoder.getVelocity();
     }
-    
+
+    //creates new zero offset
+    private void zeroOffset(double offset){
+        absEncoderConfig.zeroOffset(offset);
+    }
+
+    //zero centering enable (0 to 1  now -0.5 to 0.5)
+    private void zeroCentered(boolean zeroCentered){
+        absEncoderConfig.zeroCentered(zeroCentered);
+    }
+
+
+    //countsPerRevolution(int cpr)
     //returns value in rotations
     public double getRelPosition(){
         return absEncoder.getPosition();
@@ -159,7 +180,21 @@ public class SparkMAXController {
     public void setEncoderPos(double pos){
         relEncoder.setPosition(pos);
     }
-*/
+
+    //encoder cpr
+    private void countsPerRevolution(int cpr){
+        encoderConfig.countsPerRevolution(cpr);
+    }
+    //calcualtes average of velocity in number of smaples (1 to 64, defaut 64)
+    private void encoderVelDepthAverage(int depth){
+        encoderConfig.quadratureAverageDepth(depth);
+    }
+    //calculation rate of velocity (1 to 100ms)
+    private void encoderVelPeriod(int period){
+        encoderConfig.quadratureMeasurementPeriod(period);
+    }
+
+
 
 
     /*
@@ -345,4 +380,5 @@ public class SparkMAXController {
     private void updateMotionControl(MAXMotionConfig configuration){
         closedLoopConfig.apply(configuration);
     }
+
 }

@@ -36,12 +36,12 @@ public class EncoderHandling {
     
     //returns value in rotations
     public double getAbsPos(){
-        return relEncoder.getPosition();
+        return absEncoder.getPosition();
     }
 
     //returns value in rotations
     public double getAbsVel(){
-        return relEncoder.getVelocity();
+        return absEncoder.getVelocity();
     }
 
     //creates new zero offset
@@ -57,12 +57,12 @@ public class EncoderHandling {
 
     //returns value in rotations
     public double getRelPosition(){
-        return absEncoder.getPosition();
+        return relEncoder.getPosition();
     }
 
     //returns value in "RPM"
     public double getRelVelocity(){
-        return absEncoder.getVelocity();
+        return relEncoder.getVelocity();
     }
 
     //relative encoders have no "home", so we can set it

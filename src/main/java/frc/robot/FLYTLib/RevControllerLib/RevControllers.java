@@ -52,6 +52,7 @@ public class RevControllers {
         RevPidControl pidControl = new RevPidControl(sparkmax, config, closedLoopConfig, closedLoopController);
         absEncoder = sparkmax.getAbsoluteEncoder();
         relEncoder = sparkmax.getEncoder();
+        //relEncoder = sparkmax.getAlternateEncoder()
         encoderCfg = new EncoderHandling(absEncoder, relEncoder, absEncoderConfig, encoderConfig);
         
 

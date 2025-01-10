@@ -1,5 +1,5 @@
 package frc.robot.FLYTLib;
 
-public class Encoder {
+public class GamePadController {
     
 }

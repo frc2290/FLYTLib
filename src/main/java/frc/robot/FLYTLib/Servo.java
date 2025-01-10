@@ -1,11 +1,12 @@
 package frc.robot.FLYTLib;
 
+//servo class, to control simple servos that are conencted directly to roborio
 public class Servo {
     Servo servo;
     
     //constructor, takes in the id of the servo (pin number? CHECK!)
     Servo(int id) {
-        Servo servo = new Servo(1);
+        servo = new Servo(1);
     }
 
     //sets the absalute angle

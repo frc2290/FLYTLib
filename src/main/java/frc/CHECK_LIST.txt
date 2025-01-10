@@ -7,6 +7,11 @@ add limit interrupr if we want
 Warpping stuff pid
 https://codedocs.revrobotics.com/java/com/revrobotics/spark/config/closedloopconfig#d(double)
 
+signels stuff https://codedocs.revrobotics.com/java/com/revrobotics/spark/config/signalsconfig
 Figure out the encoder stuff
 
+add update param for encoder configuration to apply cfg
+
 add flux motor controller
+
+add custome converting factor or inplement units library into encoder stuff

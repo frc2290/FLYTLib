@@ -18,44 +18,64 @@ public class RevControllers {
 
     AbsoluteEncoder absEncoder;
     RelativeEncoder relEncoder;
-    SoftLimitConfig softLimitConfig;
-    
-    
-    AbsoluteEncoderConfig absEncoderConfig;
     EncoderConfig encoderConfig;
+    AbsoluteEncoderConfig absEncoderConfig;
+    public EncoderHandling encoderCfg;
+
+
+    
+    
+    
+    
+    
 
     SparkMax sparkmax; //comes from revmotorcontroller class
     SparkMaxConfig config;
-    public MotionController motionController;
-    public SoftLimits softLimits;
+
     MAXMotionConfig motionConfig;
+    public MotionController motionController;
+    SoftLimitConfig softLimitConfig;
+    public SoftLimits softLimits;
     ClosedLoopConfig closedLoopConfig;
-    public RevPidControl pidControl;
-    public EncoderHandling encoderCfg;
     SparkClosedLoopController closedLoopController;
+    public RevPidControl pidControl;
+    
+    
 
 
 
     //defult motor encoder
     public RevControllers(SparkMax sparkmax) {
-        this.sparkmax = sparkmax;
+
+        this.sparkmax = sparkmax; //sync with removotcontroller class
+
+        //creates new object for sparkmax cfg
         config = new SparkMaxConfig();
+
+        //creates new object for Softlimits cfg
         softLimitConfig = new SoftLimitConfig();
         @SuppressWarnings("unused")
-        SoftLimits softLimits = new SoftLimits(softLimitConfig, config, sparkmax);
+        SoftLimits softLimits = new SoftLimits(softLimitConfig, config, sparkmax); //inputs all of the object need for cfg
+
+        //closed loop pid control creat new object
+        closedLoopConfig = new ClosedLoopConfig();
+        closedLoopController = sparkmax.getClosedLoopController(); //get it from sparkmax
+        @SuppressWarnings("unused")
+        RevPidControl pidControl = new RevPidControl(sparkmax, config, closedLoopConfig, closedLoopController);
+
+
+        //creates new object for motino control cfg
         MAXMotionConfig motionConfig = new MAXMotionConfig();
         @SuppressWarnings("unused")
         MotionController motionController = new MotionController(motionConfig, sparkmax, config, closedLoopConfig);
-        closedLoopConfig = new ClosedLoopConfig();
-        closedLoopController = sparkmax.getClosedLoopController();
-        @SuppressWarnings("unused")
-        RevPidControl pidControl = new RevPidControl(sparkmax, config, closedLoopConfig, closedLoopController);
+
+
+        //THIS AREA NEEDS IMPROVEMENT
         absEncoder = sparkmax.getAbsoluteEncoder();
         relEncoder = sparkmax.getEncoder();
+        relEncoder = sparkmax.getAlternateEncoder();
         //relEncoder = sparkmax.getAlternateEncoder()
         encoderCfg = new EncoderHandling(absEncoder, relEncoder, absEncoderConfig, encoderConfig);
-        
-
     }
 
 
@@ -77,10 +97,9 @@ public class RevControllers {
     }
 
     //set voltage compansation
-    public void rev_voltageCompsation(double voltage){
+    public void rev_voltageCompansation(double voltage){
         config.voltageCompensation(voltage);
         rev_updateController();
-
     }
 
     //current limit functions

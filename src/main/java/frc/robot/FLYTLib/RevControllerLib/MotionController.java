@@ -22,25 +22,25 @@ public class MotionController {
 
 
     //max velocity in RPM
-    public void maxVel(double vel){
+    public void rev_maxVel(double vel){
         motionConfig.maxVelocity(vel);
         rev_updateController(motionConfig);
     }
 
     //max acceleration in RPM
-    public void maxAcc(double acc){
+    public void rev_maxAcc(double acc){
         motionConfig.maxAcceleration(acc);
         rev_updateController(motionConfig);
     }
 
     //allowed closed loop error
-    public void allowedErr(double err){
+    public void rev_allowedErr(double err){
         motionConfig.allowedClosedLoopError(err);
         rev_updateController(motionConfig);
     }
 
-    //set motion control mode
-    public void posMode(){
+    //HAS TO DO SOMETHING WITH THIS
+    public void rev_posMode(){
         motionConfig.positionMode(MAXMotionConfig.MAXMotionPositionMode.kMAXMotionTrapezoidal);
         rev_updateController(motionConfig);
     }

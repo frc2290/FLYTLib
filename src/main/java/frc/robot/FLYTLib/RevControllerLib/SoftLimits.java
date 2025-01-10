@@ -19,22 +19,29 @@ public class SoftLimits {
     }
 
 
-
     //soft limits postion limit
     public void rev_softFarwardLim(double limit){
-        farwardSoftLimitEnabled(true);
-        softLimitConfig.forwardSoftLimit(limit);
-        rev_updateController(softLimitConfig);
+        
+        softLimitConfig.forwardSoftLimit(limit);//set limits
+        farwardSoftLimitEnabled(true);//enable limit
+        rev_updateController(softLimitConfig);//update controller with new limit
     }
 
     //soft limits position limit in reverse
     public void rev_softReverseLim(double limit){
-        reverseSoftLimitEnabled(true);
+        
         softLimitConfig.reverseSoftLimit(limit);
+        reverseSoftLimitEnabled(true);
         rev_updateController(softLimitConfig);
 
     }
     
+    //disables all soft limits
+    public void disableSoftLim(){
+        farwardSoftLimitEnabled(false);
+        reverseSoftLimitEnabled(false);
+    }
+
     //enable or disable soft limits
     private void farwardSoftLimitEnabled(boolean enable){
         softLimitConfig.reverseSoftLimitEnabled(enable);

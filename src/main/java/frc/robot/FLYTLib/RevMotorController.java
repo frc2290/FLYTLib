@@ -7,7 +7,7 @@ import frc.robot.FLYTLib.RevControllerLib.RevControllers;
 
 public class RevMotorController {
 
-    public RevControllers advacedControl;
+    public RevControllers advacedControl; //access to advance functions
     SparkMax sparkmax;
 
     // Constructor: id number; true for brushless, 
@@ -37,35 +37,34 @@ public class RevMotorController {
 
 
 
-
-
     //get motor position
-    public double rev_getPos(){
+    public double m_getPos(){
+    
         return 0;
     }
 
     //get motor velocity
-    public double rev_getVel(){
+    public double m_getVel(){
         return 0;
     }
 
     //get motor acceleration
-    public double rev_getAcc(){
+    public double m_getAcc(){
         return 0;
     }
 
     //get motor tempreture (motor or controlelr Temp?!?)
-    public double rev_getTemp(){
+    public double m_getTemp(){
         return sparkmax.getMotorTemperature();
     }
 
     //motor controller current output
-    public double rev_getCurrent(){
+    public double m_getCurrent(){
         return sparkmax.getOutputCurrent();
     }
 
     //voltage controller is getting
-    public double rev_getVoltage(){
+    public double m_getVoltage(){
         return sparkmax.getBusVoltage();
     }
 

@@ -11,6 +11,7 @@ public class RevPidControl {
 
     SparkMax sparkmax; //comes from revmotorcontroller class
     SparkMaxConfig config;
+
     ClosedLoopConfig closedLoopConfig;
     SparkClosedLoopController closedLoopController;
 
@@ -35,8 +36,8 @@ public class RevPidControl {
     *5 - current
     *6 - dutycycle 
     */
-    
-    public void rev_setRef(double target, int controltype){
+    //HAS TO DO SOMETHING WITH THIS, SPEPARATE TARGET AND TYPE
+    public void rev_setRef(double target, int controltype){ 
         if(controltype == 0){
             closedLoopController.setReference(target, ControlType.kPosition);
         }else if (controltype == 1){
@@ -67,7 +68,7 @@ public class RevPidControl {
         rev_updateController(closedLoopConfig);
     }
 
-    //prevents sets up izone
+    //prevents sets up izone??????????????
     public void rev_Izone(double zone){
         closedLoopConfig.iZone(zone);
         rev_updateController(closedLoopConfig);
@@ -112,6 +113,7 @@ public class RevPidControl {
             rev_updateController(closedLoopConfig);
     }
 
+    //updates motor controller
     private void rev_updateController(ClosedLoopConfig configuration){
         config.apply(configuration);
         sparkmax.configure(config, SparkMax.ResetMode.kResetSafeParameters, SparkMax.PersistMode.kPersistParameters); 

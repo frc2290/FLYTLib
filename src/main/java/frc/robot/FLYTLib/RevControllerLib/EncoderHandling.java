@@ -8,7 +8,8 @@ import com.revrobotics.spark.config.EncoderConfig;
 public class EncoderHandling {
 
     AbsoluteEncoder absEncoder;
-    RelativeEncoder relEncoder;
+    RelativeEncoder relEncoder; // can be used as extrenal and internal rel
+
     AbsoluteEncoderConfig absEncoderConfig;
     EncoderConfig encoderConfig;
 
@@ -23,8 +24,6 @@ public class EncoderHandling {
         this.relEncoder = relEncoder;
         this.absEncoderConfig = absoluteEncoderConfig;
         this.encoderConfig = encoderConfig;
-
-
     }
        /*
      * Encoders

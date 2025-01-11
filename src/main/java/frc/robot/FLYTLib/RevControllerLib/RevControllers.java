@@ -43,7 +43,7 @@ public class RevControllers {
     
 
 
-
+    
     //defult motor encoder
     public RevControllers(SparkMax sparkmax) {
 
@@ -78,8 +78,7 @@ public class RevControllers {
         encoderCfg = new EncoderHandling(absEncoder, relEncoder, absEncoderConfig, encoderConfig);
     }
 
-
-
+    //GET THIS FIXED
     //set controller to follow another controller and direction
     public void rev_follow(SparkBase leader, boolean invert){
         config.follow(leader,invert);

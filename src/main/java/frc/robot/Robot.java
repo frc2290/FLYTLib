@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.FLYTLib.RevMotorController;
+import frc.robot.FLYTLib.Trashss.FT_MotorController;
+import frc.robot.FLYTLib.Trasshhhh.FLYT_SparkMax;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -84,7 +86,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    RevMotorController motor = new RevMotorController(1, true);/////////////////////////////////////////////////////////////////
+    FLYT_SparkMax motor1 = new FLYT_SparkMax(Constants.motor1);
   }
 
   @Override

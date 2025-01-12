@@ -1,4 +1,4 @@
-package frc.robot.FLYTLib.RevControllerLib;
+package frc.robot.FLYTLib;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;

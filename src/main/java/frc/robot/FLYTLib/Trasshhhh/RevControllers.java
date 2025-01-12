@@ -1,4 +1,4 @@
-package frc.robot.FLYTLib.RevControllerLib;
+package frc.robot.FLYTLib.Trasshhhh;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
@@ -77,6 +77,21 @@ public class RevControllers {
         //relEncoder = sparkmax.getAlternateEncoder()
         encoderCfg = new EncoderHandling(absEncoder, relEncoder, absEncoderConfig, encoderConfig);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     //GET THIS FIXED
     //set controller to follow another controller and direction

@@ -6,6 +6,10 @@ import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.config.EncoderConfig;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
+
+import frc.robot.FLYTLib.FLYTMotorLib.ControllerCfg.ControllerCfg;
+import frc.robot.FLYTLib.FLYTMotorLib.ControllerCfg.ControllerEnums;
+
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -17,13 +21,14 @@ public class SparkController {
     AbsoluteEncoder absEncoder;
     RelativeEncoder relEncoder;
     EncoderConfig encoderConfig;
-    AbsoluteEncoderConfig absEncoderConfig;
+    AbsoluteEncoderConfig absEncoderConfig; 
     boolean encoderConnected;
 
     //closed loop control stuff
     ClosedLoopConfig closedLoopCfg;
     SparkClosedLoopController closedLoopController;
 
+    //spark max related stuff
     SparkMax sparkMax;
     SparkMaxConfig config;
     int encoderType;
@@ -51,6 +56,10 @@ public class SparkController {
             encoderConnected = false;
 
         }
+
+        ControllerCfg motor1 = new ControllerCfg(1,ControllerEnums.BRUSHED, ControllerEnums.NONE);
+        motor1.setupAdvanceControlleCfg();
+        
 
         //motor idle mode
         if(brakeMode){

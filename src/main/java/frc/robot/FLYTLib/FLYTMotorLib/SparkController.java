@@ -22,7 +22,7 @@ public class SparkController {
     RelativeEncoder relEncoder;
     EncoderConfig encoderConfig;
     AbsoluteEncoderConfig absEncoderConfig; 
-    boolean encoderConnected;
+    boolean encoderConnected = true;
 
     //closed loop control stuff
     ClosedLoopConfig closedLoopCfg;
@@ -31,31 +31,42 @@ public class SparkController {
     //spark max related stuff
     SparkMax sparkMax;
     SparkMaxConfig config;
-    int encoderType;
+    ControllerEnums encoderType;
 
 
 
     
-    public SparkController(int motorID, boolean motortype, int encoderType, double p, double d, double ff, double range, int followID, boolean brakeMode, double vComp, int cstallLim, int freeLim, int limRpm){
+    public SparkController(ControllerCfg motorParams){
 
         //setup sparkmax class
-        sparkMax = new SparkMax(motorID, motortype ? MotorType.kBrushless : MotorType.kBrushed);
+        sparkMax = new SparkMax(motorParams.ID, motorParams.brushless ? MotorType.kBrushless : MotorType.kBrushed);
 
-        //set encoder stuff
-        this.encoderType = encoderType;
-        if(encoderType == 1){
+        //set encoder stuff (ADD CONVERSTION FACTOR)
+        this.encoderType = motorParams.encoderType;
+
+        //check what kind of encoder we have here
+        if(encoderType == ControllerEnums.ABSALUTE){
             absEncoder = sparkMax.getAbsoluteEncoder();
+            //takes in postion and sets it as a new zero
+            absEncoderConfig.zeroOffset(motorParams.encoderZero);
 
-        }else if(encoderType == 2){
+        }else if(encoderType == ControllerEnums.RELATIVE){
             relEncoder = sparkMax.getAlternateEncoder();
+            //ERROR IF CPR IS ZERO
+            encoderConfig.countsPerRevolution(motorParams.encoderCPR);
 
-        }else if(encoderType ==3){
+        }else if(encoderType == ControllerEnums.NONE && motorParams.brushless){
             relEncoder = sparkMax.getEncoder();
+            encoderConfig.countsPerRevolution(motorParams.encoderCPR);
 
-        }else if(encoderType == 4){
+        }else if(encoderType == ControllerEnums.NONE && !motorParams.brushless){
             encoderConnected = false;
-
         }
+        
+
+
+
+
 
         ControllerCfg motor1 = new ControllerCfg(1,ControllerEnums.BRUSHED, ControllerEnums.NONE);
         motor1.setupAdvanceControlleCfg();

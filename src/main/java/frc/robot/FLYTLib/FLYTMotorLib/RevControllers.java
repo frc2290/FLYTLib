@@ -1,4 +1,4 @@
-package frc.robot.FLYTLib.Trasshhhh;
+package frc.robot.FLYTLib.FLYTMotorLib;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
@@ -19,11 +19,7 @@ public class RevControllers {
     AbsoluteEncoder absEncoder;
     RelativeEncoder relEncoder;
     EncoderConfig encoderConfig;
-    AbsoluteEncoderConfig absEncoderConfig;
-    public EncoderHandling encoderCfg;
-
-
-    
+    AbsoluteEncoderConfig absEncoderConfig;   
     
     
     
@@ -31,14 +27,9 @@ public class RevControllers {
 
     SparkMax sparkmax; //comes from revmotorcontroller class
     SparkMaxConfig config;
-
     MAXMotionConfig motionConfig;
-    public MotionController motionController;
     SoftLimitConfig softLimitConfig;
-    public SoftLimits softLimits;
     ClosedLoopConfig closedLoopConfig;
-    SparkClosedLoopController closedLoopController;
-    public RevPidControl pidControl;
     
     
 

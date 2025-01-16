@@ -8,87 +8,97 @@ import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import frc.robot.Constants.ControllerCfg;
+import frc.robot.FLYTLib.FLYTMotorLib.Framework.SuperController;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-public class SparkController {
-
-    //encoder stuff
-    AbsoluteEncoder absEncoder;
-    RelativeEncoder relEncoder;
-    EncoderConfig encoderConfig;
-    AbsoluteEncoderConfig absEncoderConfig; 
-    boolean encoderConnected = true;
-
-    //closed loop control stuff
-    ClosedLoopConfig closedLoopCfg;
-    SparkClosedLoopController closedLoopController;
-
-    //spark max related stuff
-    SparkMax sparkMax;
-    SparkMaxConfig config;
-    ControllerEnums encoderType;
-
-    //encoder params
-    int encoderZero = 0;
-    int encoderCPR = 0;
-
-    //pid stuff
-    double p, i, d, ff, max, min, izon, imax;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+public class SparkController extends SuperController{
+
+    /*
+     * Rev Library
+     */
+    //motor controller
+    SparkMax sparkMax; //General controller
+    SparkMaxConfig config; //Controller configuration
+
+
+
+    //encoders
+    AbsoluteEncoder absEncoder; //absalute encoder
+    RelativeEncoder relEncoder; //relative encoder
+    EncoderConfig encoderConfig; //general encoder configuration
+    AbsoluteEncoderConfig absEncoderConfig; //absalute
+    boolean encoderConnected = true; //check if enxternal encoder connected
+
+
+
+    //closed loop
+    ClosedLoopConfig closedLoopCfg; //closed loop configuration
+    SparkClosedLoopController closedLoopController; //closed loop control
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Run this constructor for brushed and brushless motors with no connected external encoders.
+     * You are required to run encoderCfg() if brushless is chosen.
+     * @param m_id - motor id
+     * @param m_brushless - motor type
+     * @param m_break - motor idle mode
+     */
     public SparkController(int m_id, boolean m_brushless, boolean m_break){
-        //setup sparkmax class
+        //setup sparkmax object reference
         sparkMax = new SparkMax(m_id, m_brushless ? MotorType.kBrushless : MotorType.kBrushed);
-    }
 
-
-
-    public SparkController(int m_id, boolean m_brushless, boolean m_break,  ControllerEnums e_type, int encoderzero, int encoderCPR){
-        //setup sparkmax class
-        sparkMax = new SparkMax(m_id, m_brushless ? MotorType.kBrushless : MotorType.kBrushed);
-        //creat motor config
-        config = new SparkMaxConfig();
-        //Encoderconfig
-        encoderConfig = new EncoderConfig();
-        //absEncoderConfig
-        absEncoderConfig = new AbsoluteEncoderConfig();
-
-        //set encoder stuff (ADD CONVERSTION FACTOR)
-        this.encoderType = e_type;
-        this.encoderZero = encoderzero; //update the encoder zero position if absalute
-        this.encoderCPR = encoderCPR; //update encoder cpr
-
-
-        //check what kind of encoder we have here
-        if(encoderType == ControllerEnums.ABSALUTE){
-            absEncoder = sparkMax.getAbsoluteEncoder();
-            //takes in postion and sets it as a new zero
-            absEncoderConfig.zeroOffset(encoderZero);
-            config.apply(absEncoderConfig);
-
-            
-
-        }else if(encoderType == ControllerEnums.RELATIVE){
-            relEncoder = sparkMax.getAlternateEncoder();
-            //ERROR IF CPR IS ZERO
-            encoderConfig.countsPerRevolution(encoderCPR);
-            config.apply(encoderConfig);
-
-        }else if(encoderType == ControllerEnums.NONE && m_brushless){
+        if(m_brushless){
             relEncoder = sparkMax.getEncoder();
-            encoderConfig.countsPerRevolution(encoderCPR);
-            config.apply(encoderConfig);
-
-
-        }else if(encoderType == ControllerEnums.NONE && !m_brushless){
-            encoderConnected = false;
         }
+        //something should be added here later
+
     }
+
+
+
+    public SparkController(int m_id, boolean m_brushless, boolean m_break, boolean e_absalute){
+        //setup sparkmax object reference
+        sparkMax = new SparkMax(m_id, m_brushless ? MotorType.kBrushless : MotorType.kBrushed);
+
+        //if motor is brushless and has connected absalute encoder
+        if(m_brushless && e_absalute){
+            absEncoder = sparkMax.getAbsoluteEncoder();
+        }else if(m_brushless && !e_absalute){
+            relEncoder = sparkMax.getAlternateEncoder();
+        }else if(!m_brushless && e_absalute){
+            absEncoder = sparkMax.getAbsoluteEncoder();
+        }else if(!m_brushless && !e_absalute){
+            relEncoder = sparkMax.getAlternateEncoder();
+        }
+
+    }
+    
 
 
 

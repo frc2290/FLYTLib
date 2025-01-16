@@ -7,8 +7,7 @@ import com.revrobotics.spark.config.EncoderConfig;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import frc.robot.FLYTLib.FLYTMotorLib.ControllerCfg.ControllerCfg;
-import frc.robot.FLYTLib.FLYTMotorLib.ControllerCfg.ControllerEnums;
+import frc.robot.Constants.ControllerCfg;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
@@ -33,43 +32,142 @@ public class SparkController {
     SparkMaxConfig config;
     ControllerEnums encoderType;
 
+    //encoder params
+    int encoderZero = 0;
+    int encoderCPR = 0;
+
+    //pid stuff
+    double p, i, d, ff, max, min, izon, imax;
 
 
-    
-    public SparkController(ControllerCfg motorParams){
 
+    public SparkController(int m_id, boolean m_brushless, boolean m_break){
         //setup sparkmax class
-        sparkMax = new SparkMax(motorParams.ID, motorParams.brushless ? MotorType.kBrushless : MotorType.kBrushed);
+        sparkMax = new SparkMax(m_id, m_brushless ? MotorType.kBrushless : MotorType.kBrushed);
+    }
+
+
+
+    public SparkController(int m_id, boolean m_brushless, boolean m_break,  ControllerEnums e_type, int encoderzero, int encoderCPR){
+        //setup sparkmax class
+        sparkMax = new SparkMax(m_id, m_brushless ? MotorType.kBrushless : MotorType.kBrushed);
+        //creat motor config
+        config = new SparkMaxConfig();
+        //Encoderconfig
+        encoderConfig = new EncoderConfig();
+        //absEncoderConfig
+        absEncoderConfig = new AbsoluteEncoderConfig();
 
         //set encoder stuff (ADD CONVERSTION FACTOR)
-        this.encoderType = motorParams.encoderType;
+        this.encoderType = e_type;
+        this.encoderZero = encoderzero; //update the encoder zero position if absalute
+        this.encoderCPR = encoderCPR; //update encoder cpr
+
 
         //check what kind of encoder we have here
         if(encoderType == ControllerEnums.ABSALUTE){
             absEncoder = sparkMax.getAbsoluteEncoder();
             //takes in postion and sets it as a new zero
-            absEncoderConfig.zeroOffset(motorParams.encoderZero);
+            absEncoderConfig.zeroOffset(encoderZero);
+            config.apply(absEncoderConfig);
+
+            
 
         }else if(encoderType == ControllerEnums.RELATIVE){
             relEncoder = sparkMax.getAlternateEncoder();
             //ERROR IF CPR IS ZERO
-            encoderConfig.countsPerRevolution(motorParams.encoderCPR);
+            encoderConfig.countsPerRevolution(encoderCPR);
+            config.apply(encoderConfig);
 
-        }else if(encoderType == ControllerEnums.NONE && motorParams.brushless){
+        }else if(encoderType == ControllerEnums.NONE && m_brushless){
             relEncoder = sparkMax.getEncoder();
-            encoderConfig.countsPerRevolution(motorParams.encoderCPR);
+            encoderConfig.countsPerRevolution(encoderCPR);
+            config.apply(encoderConfig);
 
-        }else if(encoderType == ControllerEnums.NONE && !motorParams.brushless){
+
+        }else if(encoderType == ControllerEnums.NONE && !m_brushless){
             encoderConnected = false;
         }
+    }
+
+
+
+
+
+
+    public SparkController(int m_id, boolean m_brushless, boolean m_break,  ControllerEnums e_type, int encoderzero, int encoderCPR, double maxAcc, double maxVcc, double alloudError, double p, double i, double d, double ff, double max, double min, double izon, double imax){
+        //setup sparkmax class
+        sparkMax = new SparkMax(m_id, m_brushless ? MotorType.kBrushless : MotorType.kBrushed);
+        //creat motor config
+        config = new SparkMaxConfig();
+        //Encoderconfig
+        encoderConfig = new EncoderConfig();
+        //absEncoderConfig
+        absEncoderConfig = new AbsoluteEncoderConfig();
+
+        //set encoder stuff (ADD CONVERSTION FACTOR)
+        this.encoderType = e_type;
+        this.encoderZero = encoderzero; //update the encoder zero position if absalute
+        this.encoderCPR = encoderCPR; //update encoder cpr
+
+
+
+        //check what kind of encoder we have here
+        if(encoderType == ControllerEnums.ABSALUTE){
+            absEncoder = sparkMax.getAbsoluteEncoder();
+            //takes in postion and sets it as a new zero
+            absEncoderConfig.zeroOffset(encoderZero);
+            config.apply(absEncoderConfig);
+
+            
+
+        }else if(encoderType == ControllerEnums.RELATIVE){
+            relEncoder = sparkMax.getAlternateEncoder();
+            //ERROR IF CPR IS ZERO
+            encoderConfig.countsPerRevolution(encoderCPR);
+            config.apply(encoderConfig);
+
+        }else if(encoderType == ControllerEnums.NONE && m_brushless){
+            relEncoder = sparkMax.getEncoder();
+            encoderConfig.countsPerRevolution(encoderCPR);
+            config.apply(encoderConfig);
+
+
+        }else if(encoderType == ControllerEnums.NONE && !m_brushless){
+            encoderConnected = false;
+        }
+    
+        this.p = p;
+        this.i = i;
+        this.d = d;
+        this.ff = ff;
+        this.max = max;
+        this.min = min;
+        this.izon = izon;
+        this.imax = imax;   
+
         
 
 
 
 
+                
+            
 
-        ControllerCfg motor1 = new ControllerCfg(1,ControllerEnums.BRUSHED, ControllerEnums.NONE);
-        motor1.setupAdvanceControlleCfg();
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
         
 
         //motor idle mode
@@ -113,7 +211,7 @@ public class SparkController {
 
     }
 
-
+    
 
     //get position
     public double getPos(){

@@ -1,4 +1,4 @@
-package frc.robot.FLYTLib.FLYTMotorLib.ControllerCfg;
+package frc.robot.FLYTLib.FLYTMotorLib;
 
 public enum ControllerEnums {
     //Encoder type

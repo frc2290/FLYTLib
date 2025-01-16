@@ -1,6 +1,6 @@
 package frc.robot;
 
-import frc.robot.FLYTLib.FLYTMotorLib.ControllerCfg.ControllerEnums;
+import frc.robot.FLYTLib.FLYTMotorLib.ControllerEnums;
 
 
 

@@ -1,4 +1,4 @@
-package frc.robot.FLYTLib;
+package frc.robot.FLYTLib.FLYTMotorLib;
 
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig;

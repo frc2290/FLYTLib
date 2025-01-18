@@ -3,9 +3,11 @@ package frc.robot.FLYTLib.FLYTMotorLib;
 public abstract class SuperController {
 
 
+    protected double conversionFactor = 1;
+
 
     //Control
-    abstract void set();
+    abstract void set(double set);
 
     abstract void disable();
 
@@ -24,17 +26,17 @@ public abstract class SuperController {
 
 
     //Config STUFF
-    abstract void pidTune(double p, double i, double d, double f, double vf);
+    abstract void pidTune(double p, double i, double d, double ff);
 
-    abstract void pidSetup(double max, double min, double izone, double imax);
+    abstract void pidSetup(double min, double max, double izone, double imax, boolean primaryEnc, int controlType);
 
     abstract void motionProfile(double maxVel, double maxAcc);
 
     abstract void followeMe(int leaderID, boolean invert);
 
-    abstract void encocderCfg(int countsPerRev, int zero);
+    abstract void encocderCfg(int countsPerRev, double setPos);
 
-    abstract void avanceControl(double voltageComp, int currentStallLim, int currentFreeLim, double converionsFactor);
+    abstract void avdanceControl(double voltageComp, int currentStallLim, int currentFreeLim, double conversionFactor);
 
     
     

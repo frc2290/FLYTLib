@@ -17,7 +17,28 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  public static final class DriverBaseConstants{
+
+
+
+  }
+
+  public static class RollerMotorConstants{
+    public static final int motor_id = 7;
+    public static final boolean brushless = true;
+    public static final boolean break_mode = true;
+
+    public static final double motor_voltageComp = 10;
+    public static final int motor_currentLim = 60;
+  }
+
+
   public static final class DriveConstants {
+
+
+
+
     public static final int LEFT_LEADER_ID = 6; //1
     public static final int LEFT_FOLLOWER_ID = 2;
     public static final int RIGHT_LEADER_ID = 5; //3

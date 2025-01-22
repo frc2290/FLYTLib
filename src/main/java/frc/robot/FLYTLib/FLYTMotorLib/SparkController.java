@@ -61,6 +61,7 @@ public class SparkController extends SuperController{
     private boolean pidREADY =  false; //  checks and sees if pid setup was successfully used
     private boolean pidDisabled = true;
     private ControlType controlType;
+    private double motorID;
 
     
 
@@ -76,7 +77,7 @@ public class SparkController extends SuperController{
     public SparkController(int m_id, boolean m_brushless, boolean m_break){
         //setup sparkmax object reference
         sparkMax = new SparkMax(m_id, m_brushless ? MotorType.kBrushless : MotorType.kBrushed);
-
+        motorID = m_id;
         //checks if brushless or not, since by defult brushless has encoder
         if(m_brushless){
             relEncoder = sparkMax.getEncoder();
@@ -207,6 +208,13 @@ public class SparkController extends SuperController{
      */
     public double getVol(){
         return sparkMax.getBusVoltage();
+    }
+
+    /**
+     * Get motor can id
+     */
+    public double getMotorID(){
+        return motorID;
     }
     
 

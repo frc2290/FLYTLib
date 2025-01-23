@@ -4,7 +4,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.FLYTLib.FLYTMotorLib.SuperController;
 
-public class MotorDashboard {
+public class MotorDashboard extends SuperDashboard{
     
     NetworkTable table;
     SuperController controller;
@@ -30,11 +30,17 @@ public class MotorDashboard {
     }
 
 
-
+    //set things on the dashboard
     private void set(String name, double value){
         table.getEntry(name).setValue(value);
     }
 
+
+
+    @Override
+    public void periodic() {
+        update();
+    }
     
 
     

@@ -10,6 +10,7 @@ import java.util.function.DoubleSupplier;
 
 // Command to run the roller with joystick inputs
 public class RollerCommand extends Command {
+  
   private final DoubleSupplier forward;
   // private final CANRollerSubsystem rollerSubsystem;
   private final CANRollerSubsystem rollerSubsystem;

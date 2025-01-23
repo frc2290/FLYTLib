@@ -1,8 +1,11 @@
 package frc.robot.FLYTLib.FLYTDashboard;
 
+import frc.robot.FLYTLib.FLYTPeriodic;
 
+public abstract class SuperDashboard extends FLYTPeriodic {
 
-public abstract class SuperDashboard {
+    @Override
+    abstract public void periodic();
 
 
 

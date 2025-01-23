@@ -9,7 +9,8 @@ public class MotorDashboard extends SuperDashboard{
     NetworkTable table;
     SuperController controller;
     
-    public MotorDashboard(SuperController controller){
+    public MotorDashboard(SuperController m_controller){
+        controller = m_controller;
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         table = inst.getTable("Motor" + String.valueOf(controller.getMotorID()));
     }
@@ -43,5 +44,5 @@ public class MotorDashboard extends SuperDashboard{
     }
     
 
-    
+
 }

@@ -33,7 +33,7 @@ public class RobotSystem extends SubsystemBase{
     public RobotSystem(){
             NetworkTableInstance inst = NetworkTableInstance.getDefault();
             table = inst.getTable("Gyro");
-    
+            kGyroOffest = table.getEntry("GyroOffset");
             //set up the gyro
             gyro.reset();
 

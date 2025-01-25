@@ -1,10 +1,11 @@
 package frc.robot.FLYTLib.FLYTMotorLib;
 
+import frc.robot.FLYTLib.FLYTDashboard.MotorDashboard;
+
 public abstract class SuperController {
 
 
     protected double conversionFactor = 1;
-
 
     /**
      * Set relative speed, multiplies factor by availble voltage. (conversion factored)

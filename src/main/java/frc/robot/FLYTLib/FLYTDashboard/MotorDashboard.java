@@ -3,10 +3,11 @@ package frc.robot.FLYTLib.FLYTDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.FLYTLib.GlobalVar;
 import frc.robot.FLYTLib.FLYTMotorLib.SuperController;
 
-public class MotorDashboard extends SuperDashboard{
+public class MotorDashboard extends SuperDashboard {
     
     //Network tables for the controller configuration
     NetworkTable table;
@@ -29,8 +30,12 @@ public class MotorDashboard extends SuperDashboard{
         kD.setDouble(0);
         kFF.setDouble(0);
         set.setDouble(0);
+        controller.pidSetup(-1, 1, 0, 0, true,0);
     }
 
+    public void test() {
+        System.out.println("Howdy");
+    }
 
 
     //works on printing motor status
@@ -59,12 +64,13 @@ public class MotorDashboard extends SuperDashboard{
 
     @Override
     public void periodic() {
-        if(GlobalVar.debug) motorState();
-        if(GlobalVar.debug) 
-        controller.pidSetup(-1, 1, 0, 0, true, (int)cType.getDouble(0));
-        motorTune(kP.getDouble(0.0), kI.getDouble(0.0), kD.getDouble(0.0), kFF.getDouble(0.0));
-        controller.set(set.getDouble(0.0));
-
+        if(GlobalVar.debug) {
+            motorState();
+        }
+        if(GlobalVar.debug) {
+            motorTune(kP.getDouble(0.0), kI.getDouble(0.0), kD.getDouble(0.0), kFF.getDouble(0.0));
+            controller.set(set.getDouble(0.0));
+        }
     }
     
 

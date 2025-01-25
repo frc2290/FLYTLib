@@ -103,13 +103,23 @@ public class SparkController extends SuperController{
      * @param m_break - motor idel mode
      * @param e_absalute - encoder type
      */
-    public SparkController(int m_id, boolean m_brushless, boolean m_break, boolean invert, boolean e_absalute){
+    public SparkController(int m_id, boolean m_brushless, boolean m_break, boolean invert, boolean me_absalute){
         //setup sparkmax object reference
         sparkMax = new SparkMax(m_id, m_brushless ? MotorType.kBrushless : MotorType.kBrushed);
         config = new SparkMaxConfig();
         config.inverted(invert);
         ControllerUpdate();
 
+        if (me_absalute) {
+            absEncoder = sparkMax.getAbsoluteEncoder();
+            e_absalute = true;
+            e_encoderAvailable = true;
+        } else {
+            relEncoder = sparkMax.getAlternateEncoder();
+            e_absalute = false;
+            e_encoderAvailable = true;
+        }
+        /*
         //if motor is brushless and has connected absalute encoder
         if(m_brushless && e_absalute){
             e_absalute = true;
@@ -131,6 +141,7 @@ public class SparkController extends SuperController{
             relEncoder = sparkMax.getAlternateEncoder();
             e_encoderAvailable = true;
         }
+            */
     }
 
 
@@ -264,12 +275,7 @@ public class SparkController extends SuperController{
      * @param controlType - 0:position, 1:velocity, 2:kmaxPosition, 3:kmaxVelocity, 4:Voltage, 5:Current, 6:kDuty
      */
     public void pidSetup(double min, double max, double izone, double imax, boolean primaryEnc, int controlType){    
-        if(pidDisabled)
-        {
-
-        }else{
-
-        
+        if(!pidDisabled) {
             closedLoopCfg.outputRange(min, imax);
             closedLoopCfg.iZone(izone);
             closedLoopCfg.iMaxAccum(imax);

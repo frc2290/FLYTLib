@@ -18,7 +18,7 @@ public class CANRollerSubsystem extends SubsystemBase {
   public CANRollerSubsystem() {
 
     //initialize FLYT Motor
-    rollerMotor = new SparkController(RollerMotorConstants.motor_id, RollerMotorConstants.brushless, RollerMotorConstants.break_mode, false);
+    rollerMotor = new SparkController(RollerMotorConstants.motor_id, RollerMotorConstants.brushless, RollerMotorConstants.break_mode, true);
     //rollerMotor.encocderCfg(0, 0);
     rollerMotor.advanceControl(RollerMotorConstants.motor_voltageComp, RollerMotorConstants.motor_currentLim, 0, 0);
 

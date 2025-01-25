@@ -20,7 +20,7 @@ public class CANRollerSubsystem extends SubsystemBase {
     //initialize FLYT Motor
     rollerMotor = new SparkController(RollerMotorConstants.motor_id, RollerMotorConstants.brushless, RollerMotorConstants.break_mode);
     //rollerMotor.encocderCfg(0, 0);
-    rollerMotor.avdanceControl(RollerMotorConstants.motor_voltageComp, RollerMotorConstants.motor_currentLim, 0, 0);
+    rollerMotor.advanceControl(RollerMotorConstants.motor_voltageComp, RollerMotorConstants.motor_currentLim, 0, 0);
 
     //initialize FLYT motor Dashboard
     rollerDashboard = new MotorDashboard(rollerMotor);
@@ -48,7 +48,7 @@ public class CANRollerSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     //update dashaboard
-    rollerDashboard.update();
+    //rollerDashboard.update();
   }
 
   /** This is a method that makes the roller spin */

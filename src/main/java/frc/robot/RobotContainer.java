@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.RollerConstants;
+import frc.robot.FLYTLib.RobotSystem;
 import frc.robot.commands.AutoCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.RollerCommand;
@@ -29,6 +30,7 @@ public class RobotContainer {
   // The robot's subsystems
   private final CANDriveSubsystem driveSubsystem = new CANDriveSubsystem();
   private final CANRollerSubsystem rollerSubsystem = new CANRollerSubsystem();
+  private final RobotSystem robotSystem = new RobotSystem();
 
   // The driver's controller
   private final CommandXboxController driverController = new CommandXboxController(
@@ -74,8 +76,7 @@ public class RobotContainer {
 
     // before
     driverController.a()
-    driverController.
-        .whileTrue(new RollerCommand(() -> RollerConstants.ROLLER_EJECT_VALUE, rollerSubsystem));
+        .whileTrue(new RollerCommand(rollerSubsystem));
 
     // Set the default command for the drive subsystem to an instance of the
     // DriveCommand with the values provided by the joystick axes on the driver
@@ -92,7 +93,7 @@ public class RobotContainer {
     // Set the default command for the roller subsystem to an instance of
     // RollerCommand with the values provided by the triggers on the operator
     // controller
-    rollerSubsystem.setDefaultCommand(new RollerCommand(() -> driverController.getRightTriggerAxis(),rollerSubsystem));
+    //rollerSubsystem.setDefaultCommand(new RollerCommand(rollerSubsystem));
   }
 
 

@@ -11,7 +11,7 @@ public class MotorDashboard extends SuperDashboard{
     //Network tables for the controller configuration
     NetworkTable table;
     SuperController controller;
-    private NetworkTableEntry kP, kI, kD, kFF;
+    private NetworkTableEntry kP, kI, kD, kFF, set,cType;
     
     //constructor, just needs motor controller object
     public MotorDashboard(SuperController m_controller){
@@ -22,6 +22,13 @@ public class MotorDashboard extends SuperDashboard{
         kI = table.getEntry("kI");
         kD = table.getEntry("kD");
         kFF = table.getEntry("kFF");
+        set = table.getEntry("SetPoint");
+        cType = table.getEntry("ControlType");
+        kP.setDouble(0);
+        kI.setDouble(0);
+        kD.setDouble(0);
+        kFF.setDouble(0);
+        set.setDouble(0);
     }
 
 
@@ -38,7 +45,7 @@ public class MotorDashboard extends SuperDashboard{
     }
 
     //tunes the motor gains
-    private void motorTune(){
+    private void motorTune(double kp, double ki, double kd, double ff){
         controller.pidTune(kP.getDouble(0), kI.getDouble(0), kD.getDouble(0), kFF.getDouble(0));
     }
 
@@ -53,11 +60,11 @@ public class MotorDashboard extends SuperDashboard{
     @Override
     public void periodic() {
         if(GlobalVar.debug) motorState();
-        if(GlobalVar.debug) motorTune();
-        // set("p", getP())
-        // if (get("p") != controller.getP()) {
-        //  changeP();
-        // }
+        if(GlobalVar.debug) 
+        controller.pidSetup(-1, 1, 0, 0, true, (int)cType.getDouble(0));
+        motorTune(kP.getDouble(0.0), kI.getDouble(0.0), kD.getDouble(0.0), kFF.getDouble(0.0));
+        controller.set(set.getDouble(0.0));
+
     }
     
 

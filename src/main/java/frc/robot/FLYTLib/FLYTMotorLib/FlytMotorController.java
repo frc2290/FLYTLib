@@ -1,11 +1,19 @@
 package frc.robot.FLYTLib.FLYTMotorLib;
 
-import frc.robot.FLYTLib.FLYTDashboard.MotorDashboard;
+import frc.robot.FLYTLib.FLYTDashboard.FlytDashboard;
 
-public abstract class SuperController {
-
+public abstract class FlytMotorController {
 
     protected double conversionFactor = 1;
+    protected FlytDashboard controllerDashboard;
+    protected String controllerName;
+    
+    public FlytMotorController(String m_controllerName) {
+        controllerName = m_controllerName;
+        controllerDashboard = new FlytDashboard(controllerName);
+        controllerDashboard.addDoublePublisher("MotorID", () -> getMotorID());
+        controllerDashboard.addDoublePublisher("MotorPos", () -> getPos());
+    }
 
     /**
      * Set relative speed, multiplies factor by availble voltage. (conversion factored)
@@ -104,6 +112,12 @@ public abstract class SuperController {
      */
     public abstract void advanceControl(double voltageComp, int currentStallLim, int currentFreeLim, double conversionFactor);
 
-    
-    
+
+    /**
+     * Method to be called in periodic of Subsystem the Controller is used in.
+     * This updates the dashboard values.
+     */
+    public void updateDashboard() {
+        controllerDashboard.update();
+    }   
 }

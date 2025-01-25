@@ -1,4 +1,4 @@
-package frc.robot.FLYTLib.FLYTDashboard;
+package frc.robot.FLYTLib.FLYTDashboard.OldStuff;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;

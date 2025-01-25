@@ -13,21 +13,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SparkController extends SuperController{
+public class SparkController extends FlytMotorController {
 
     /*
      * Rev Library
@@ -36,25 +22,19 @@ public class SparkController extends SuperController{
     SparkMax sparkMax; //General controller
     SparkMaxConfig config; //Controller configuration objects
 
-
-
     //encoders
     AbsoluteEncoder absEncoder; //absalute encoder
     RelativeEncoder relEncoder; //relative encoder
     EncoderConfig encoderConfig; //general encoder configuration
     AbsoluteEncoderConfig absEncoderConfig; //absalute
 
-
     //Motion contorler
     MAXMotionConfig motionConfig;
-
-
 
     //closed loop
     ClosedLoopConfig closedLoopCfg; //closed loop configuration
     SparkClosedLoopController closedLoopController; //closed loop control
 
- 
     //private vars for internal calculation and specifications
     private boolean e_encoderAvailable = false; //check if enxternal encoder connected
     private boolean e_absalute = false; //check if specified encoder is absalute
@@ -63,18 +43,16 @@ public class SparkController extends SuperController{
     private ControlType controlType;
     private double motorID;
 
-    
-
-
-
     /**
      * Run this constructor for brushed and brushless motors with no connected external encoders.
      * You are required to run encoderCfg() if brushless is chosen.
+     * @param m_motorName - name of the motor
      * @param m_id - motor id
      * @param m_brushless - motor type
      * @param m_break - motor idle mode
      */
-    public SparkController(int m_id, boolean m_brushless, boolean m_break, boolean invert){
+    public SparkController(String m_motorName, int m_id, boolean m_brushless, boolean m_break, boolean invert){
+        super(m_motorName);
         //setup sparkmax object reference
         sparkMax = new SparkMax(m_id, m_brushless ? MotorType.kBrushless : MotorType.kBrushed);
         
@@ -98,12 +76,14 @@ public class SparkController extends SuperController{
 
     /**
      * Run this constructor for brushed and brushless motors that have connected external encoder
+     * @param m_motorName - name of the motor
      * @param m_id - motor id
      * @param m_brushless - motor type
      * @param m_break - motor idel mode
      * @param e_absalute - encoder type
      */
-    public SparkController(int m_id, boolean m_brushless, boolean m_break, boolean invert, boolean me_absalute){
+    public SparkController(String m_motorName, int m_id, boolean m_brushless, boolean m_break, boolean invert, boolean me_absalute){
+        super(m_motorName);
         //setup sparkmax object reference
         sparkMax = new SparkMax(m_id, m_brushless ? MotorType.kBrushless : MotorType.kBrushed);
         config = new SparkMaxConfig();

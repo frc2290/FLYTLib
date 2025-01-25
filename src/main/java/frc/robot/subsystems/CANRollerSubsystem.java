@@ -6,24 +6,24 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RollerMotorConstants;
-import frc.robot.FLYTLib.FLYTDashboard.MotorDashboard;
+import frc.robot.FLYTLib.FLYTDashboard.OldStuff.MotorDashboard;
+import frc.robot.FLYTLib.FLYTMotorLib.FlytMotorController;
 import frc.robot.FLYTLib.FLYTMotorLib.SparkController;
-import frc.robot.FLYTLib.FLYTMotorLib.SuperController;
 
 /** Class to run the rollers over CAN */
 public class CANRollerSubsystem extends SubsystemBase {
-  private final SuperController rollerMotor;
-  private final MotorDashboard rollerDashboard;
+  private final FlytMotorController rollerMotor;
+  //private final MotorDashboard rollerDashboard;
 
   public CANRollerSubsystem() {
 
     //initialize FLYT Motor
-    rollerMotor = new SparkController(RollerMotorConstants.motor_id, RollerMotorConstants.brushless, RollerMotorConstants.break_mode, true);
+    rollerMotor = new SparkController("Roller Motor", RollerMotorConstants.motor_id, RollerMotorConstants.brushless, RollerMotorConstants.break_mode, true);
     //rollerMotor.encocderCfg(0, 0);
     rollerMotor.advanceControl(RollerMotorConstants.motor_voltageComp, RollerMotorConstants.motor_currentLim, 0, 0);
 
     //initialize FLYT motor Dashboard
-    rollerDashboard = new MotorDashboard(rollerMotor);
+    //rollerDashboard = new MotorDashboard(rollerMotor);
 
     // Set up the roller motor as a brushed motor
     ////rollerMotor = new SparkMax(RollerConstants.ROLLER_MOTOR_ID, MotorType.kBrushed);
@@ -49,6 +49,7 @@ public class CANRollerSubsystem extends SubsystemBase {
   public void periodic() {
     //update dashaboard
     //rollerDashboard.update();
+    rollerMotor.updateDashboard();
   }
 
   /** This is a method that makes the roller spin */

@@ -1,21 +1,21 @@
-package frc.robot.FLYTLib.FLYTDashboard;
+package frc.robot.FLYTLib.FLYTDashboard.OldStuff;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.FLYTLib.GlobalVar;
-import frc.robot.FLYTLib.FLYTMotorLib.SuperController;
+import frc.robot.FLYTLib.FLYTMotorLib.FlytMotorController;
 
 public class MotorDashboard extends SuperDashboard {
     
     //Network tables for the controller configuration
     NetworkTable table;
-    SuperController controller;
+    FlytMotorController controller;
     private NetworkTableEntry kP, kI, kD, kFF, set,cType;
     
     //constructor, just needs motor controller object
-    public MotorDashboard(SuperController m_controller){
+    public MotorDashboard(FlytMotorController m_controller){
         controller = m_controller;
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
         table = inst.getTable("Motor" + String.valueOf(controller.getMotorID()));

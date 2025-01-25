@@ -74,6 +74,7 @@ public class RobotContainer {
 
     // before
     driverController.a()
+    driverController.
         .whileTrue(new RollerCommand(() -> RollerConstants.ROLLER_EJECT_VALUE, rollerSubsystem));
 
     // Set the default command for the drive subsystem to an instance of the

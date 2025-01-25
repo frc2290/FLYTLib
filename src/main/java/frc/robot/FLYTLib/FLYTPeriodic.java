@@ -1,10 +1,19 @@
 package frc.robot.FLYTLib;
 
-import frc.robot.subsystems.FlytLibPeriodic;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public abstract class FLYTPeriodic extends FlytLibPeriodic{
+public class FLYTPeriodic{
 
-    @Override
-    abstract public void periodic();
+    public FLYTPeriodic(){
+        initialization();
+    }
+
+    public void initialization(){
+
+    }
+
+    public void periodic(){
+        
+    }
     
 }

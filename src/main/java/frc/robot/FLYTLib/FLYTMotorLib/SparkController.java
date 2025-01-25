@@ -59,7 +59,7 @@ public class SparkController extends SuperController{
     private boolean e_encoderAvailable = false; //check if enxternal encoder connected
     private boolean e_absalute = false; //check if specified encoder is absalute
     private boolean pidREADY =  false; //  checks and sees if pid setup was successfully used
-    private boolean pidDisabled = true;
+    public boolean pidDisabled = true;
     private ControlType controlType;
     private double motorID;
 
@@ -78,10 +78,13 @@ public class SparkController extends SuperController{
         //setup sparkmax object reference
         sparkMax = new SparkMax(m_id, m_brushless ? MotorType.kBrushless : MotorType.kBrushed);
         config = new SparkMaxConfig();
+        encoderConfig = new EncoderConfig();
         motorID = m_id;
         //checks if brushless or not, since by defult brushless has encoder
         if(m_brushless){
-            relEncoder = sparkMax.getEncoder();
+            relEncoder = sparkMax.getEncoder(); 
+            e_encoderAvailable = true;
+
         }
 
         //something should be added here later
@@ -225,8 +228,7 @@ public class SparkController extends SuperController{
      * @param p - proportional
      * @param i - integral
      * @param d - derivitive
-     * @param f - feed farward
-     * @param vf - velocity feedfarward
+     * @param ff - velocity feedfarward
      */
     public void pidTune(double p, double i, double d, double ff){
 
@@ -358,7 +360,7 @@ public class SparkController extends SuperController{
      * @param currentFreeLim - limit current at motor max speed
      * @param converstionFactor - factor to convert convertion roations into degrees or radians (get postion, and set, etc) (0 is defult 1)
      */
-    public void avdanceControl(double voltageComp, int currentStallLim, int currentFreeLim, double conversionFactor){
+    public void advanceControl(double voltageComp, int currentStallLim, int currentFreeLim, double conversionFactor){
  
         config.voltageCompensation(voltageComp);
         config.smartCurrentLimit(currentStallLim, currentFreeLim);

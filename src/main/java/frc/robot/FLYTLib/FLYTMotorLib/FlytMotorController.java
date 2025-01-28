@@ -112,6 +112,14 @@ public abstract class FlytMotorController {
      */
     public abstract void advanceControl(double voltageComp, int currentStallLim, int currentFreeLim, double conversionFactor);
 
+    /**
+     * Method to return the friendly name of the motor. Name is given through constructor.
+     * 
+     * @return Friendly name of the motor controller.
+     */
+    public String getName() {
+        return controllerName;
+    }
 
     /**
      * Method to be called in periodic of Subsystem the Controller is used in.

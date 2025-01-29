@@ -6,9 +6,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RollerMotorConstants;
-import frc.robot.FLYTLib.FLYTDashboard.OldStuff.MotorDashboard;
 import frc.robot.FLYTLib.FLYTMotorLib.FlytMotorController;
-import frc.robot.FLYTLib.FLYTMotorLib.SparkController;
+import frc.robot.FLYTLib.FLYTMotorLib.SparkMaxController;
 
 /** Class to run the rollers over CAN */
 public class CANRollerSubsystem extends SubsystemBase {
@@ -18,7 +17,7 @@ public class CANRollerSubsystem extends SubsystemBase {
   public CANRollerSubsystem() {
 
     //initialize FLYT Motor
-    rollerMotor = new SparkController("Roller Motor", RollerMotorConstants.motor_id, RollerMotorConstants.brushless, RollerMotorConstants.break_mode, true);
+    rollerMotor = new SparkMaxController("Roller Motor", RollerMotorConstants.motor_id, RollerMotorConstants.brushless, RollerMotorConstants.break_mode, true);
     //rollerMotor.encocderCfg(0, 0);
     rollerMotor.advanceControl(RollerMotorConstants.motor_voltageComp, RollerMotorConstants.motor_currentLim, 0, 0);
 

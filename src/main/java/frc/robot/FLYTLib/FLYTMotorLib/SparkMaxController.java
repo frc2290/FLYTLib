@@ -13,7 +13,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-public class SparkController extends FlytMotorController {
+public class SparkMaxController extends FlytMotorController {
 
     /*
      * Rev Library
@@ -51,7 +51,7 @@ public class SparkController extends FlytMotorController {
      * @param m_brushless - motor type
      * @param m_break - motor idle mode
      */
-    public SparkController(String m_motorName, int m_id, boolean m_brushless, boolean m_break, boolean invert){
+    public SparkMaxController(String m_motorName, int m_id, boolean m_brushless, boolean m_break, boolean invert){
         super(m_motorName);
         //setup sparkmax object reference
         sparkMax = new SparkMax(m_id, m_brushless ? MotorType.kBrushless : MotorType.kBrushed);
@@ -82,7 +82,7 @@ public class SparkController extends FlytMotorController {
      * @param m_break - motor idel mode
      * @param e_absalute - encoder type
      */
-    public SparkController(String m_motorName, int m_id, boolean m_brushless, boolean m_break, boolean invert, boolean me_absalute){
+    public SparkMaxController(String m_motorName, int m_id, boolean m_brushless, boolean m_break, boolean invert, boolean me_absalute){
         super(m_motorName);
         //setup sparkmax object reference
         sparkMax = new SparkMax(m_id, m_brushless ? MotorType.kBrushless : MotorType.kBrushed);

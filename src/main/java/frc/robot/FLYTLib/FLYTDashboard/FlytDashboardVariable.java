@@ -2,6 +2,7 @@ package frc.robot.FLYTLib.FLYTDashboard;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.networktables.GenericPublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.Topic;
@@ -16,11 +17,22 @@ public class FlytDashboardVariable {
     private int type = 0;
     private Topic topic;
     private GenericPublisher publisher;
+    private DoubleSubscriber doubleSubscriber;
 
     private NetworkTableInstance inst = NetworkTableInstance.getDefault();
 
     public FlytDashboardVariable(String m_name) {
         name = m_name;
+    }
+
+    //creat a subsrciber for named topic
+    public void addDoubleSubscriber(String name){
+        doubleSubscriber = inst.getDoubleTopic(name).subscribe(0.0);//we can place defult values some time later
+    }
+
+    //get the value of the subscriber
+    public double getDouble(){
+        return doubleSubscriber.get();
     }
 
     public void addBooleanSupplier(Supplier<Boolean> m_supplier) {

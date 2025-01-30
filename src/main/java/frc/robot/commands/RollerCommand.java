@@ -7,7 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.RollerConstants;
 import frc.robot.subsystems.CANRollerSubsystem;
-import java.util.function.DoubleSupplier;
 
 // Command to run the roller with joystick inputs
 public class RollerCommand extends Command {

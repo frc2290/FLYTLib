@@ -3,7 +3,7 @@ package frc.robot.FLYTLib.FLYTDashboard;
 import java.util.ArrayList;
 import java.util.function.Supplier;
 
-public class FlytDashboard {
+public class FlytLogger {
 
     private String name;
     private ArrayList<FlytDashboardVariable> pubs;
@@ -17,7 +17,7 @@ public class FlytDashboard {
      * 
      * @param m_name - Name of the table for the dashboard
      */
-    public FlytDashboard(String m_name) {
+    public FlytLogger(String m_name) {
         name = m_name;
         pubs = new ArrayList<FlytDashboardVariable>();
     }
@@ -78,5 +78,14 @@ public class FlytDashboard {
         for (FlytDashboardVariable pub : pubs) {
             pub.update();
         }
+    }
+
+    public double getDouble(String m_name) {
+        for (FlytDashboardVariable item : pubs) {
+            if (item.getName().equals(m_name)) {
+                return item.getDouble();
+            }
+        }
+        return 0.0;
     }
 }

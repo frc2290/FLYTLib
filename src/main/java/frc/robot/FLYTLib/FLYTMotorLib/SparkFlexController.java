@@ -5,9 +5,7 @@ import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.config.EncoderConfig;
 import com.revrobotics.spark.config.MAXMotionConfig;
-import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkFlexConfig;
-import com.revrobotics.spark.config.SparkFlexConfigAccessor;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
@@ -372,7 +370,7 @@ public class SparkFlexController extends FlytMotorController {
 
     //Updates the controller with new config params
     private void ControllerUpdate(){
-        sparkFlex.configure(config, sparkFlex.ResetMode.kResetSafeParameters, sparkFlex.PersistMode.kPersistParameters); 
+        sparkFlex.configure(config, SparkFlex.ResetMode.kResetSafeParameters, SparkFlex.PersistMode.kPersistParameters); 
     }
 
 }

@@ -48,7 +48,10 @@ public class CANRollerSubsystem extends SubsystemBase {
   public void periodic() {
     //update dashaboard
     //rollerDashboard.update();
+
     rollerMotor.updateDashboard();
+    //setpoint update here
+    //check for the dashboard input and the extisiting values, if so update pid tune
   }
 
   /** This is a method that makes the roller spin */

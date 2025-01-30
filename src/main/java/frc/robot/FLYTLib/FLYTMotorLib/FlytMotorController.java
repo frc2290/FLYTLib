@@ -1,18 +1,22 @@
 package frc.robot.FLYTLib.FLYTMotorLib;
 
-import frc.robot.FLYTLib.FLYTDashboard.FlytDashboard;
+import frc.robot.FLYTLib.FLYTDashboard.FlytLogger;
 
 public abstract class FlytMotorController {
 
     protected double conversionFactor = 1;
-    protected FlytDashboard controllerDashboard;
+    protected FlytLogger controllerDashboard;
     protected String controllerName;
+    //pid stuff
+    protected double p, i, d, ff;
+    protected int controlType;
     
     public FlytMotorController(String m_controllerName) {
-        controllerName = m_controllerName;
-        controllerDashboard = new FlytDashboard(controllerName);
+        controllerName = m_controllerName;//why?
+        controllerDashboard = new FlytLogger(controllerName);
         controllerDashboard.addDoublePublisher("MotorID", () -> getMotorID());
         controllerDashboard.addDoublePublisher("MotorPos", () -> getPos());
+
     }
 
     /**

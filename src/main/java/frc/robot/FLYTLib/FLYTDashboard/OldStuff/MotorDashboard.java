@@ -3,7 +3,6 @@ package frc.robot.FLYTLib.FLYTDashboard.OldStuff;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.FLYTLib.GlobalVar;
 import frc.robot.FLYTLib.FLYTMotorLib.FlytMotorController;
 

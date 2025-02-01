@@ -5,7 +5,7 @@ import frc.robot.FLYTLib.FLYTDashboard.FlytLogger;
 public abstract class FlytMotorController {
 
     protected double conversionFactor = 1;
-    protected FlytLogger controllerDashboard;
+    protected FlytLogger controllerLogger;
     protected String controllerName;
     //pid stuff
     protected double p, i, d, ff;
@@ -13,9 +13,10 @@ public abstract class FlytMotorController {
     
     public FlytMotorController(String m_controllerName) {
         controllerName = m_controllerName;//why?
-        controllerDashboard = new FlytLogger(controllerName);
-        controllerDashboard.addDoublePublisher("MotorID", () -> getMotorID());
-        controllerDashboard.addDoublePublisher("MotorPos", () -> getPos());
+        controllerLogger = new FlytLogger(controllerName);
+        controllerLogger.addDoublePublisher("MotorID", () -> getMotorID());
+        controllerLogger.addDoublePublisher("MotorPos", () -> getPos());
+        controllerLogger.addDoublePublisher("P", () -> getP());
 
     }
 
@@ -24,6 +25,7 @@ public abstract class FlytMotorController {
      * If pid is enabled, set postion, set velocity, etc.
      */
     public abstract void set(double set);
+
 
     /**
      * Disable motor
@@ -73,7 +75,16 @@ public abstract class FlytMotorController {
      * @param d - derivitive
      * @param ff - velocity feedfarward
      */
-    public abstract void pidTune(double p, double i, double d, double ff);
+    public void pidTune(double m_p, double m_i, double m_d, double m_ff) {
+        p = m_p;
+        i = m_i;
+        d = m_d;
+        ff = m_ff;
+    }
+
+    public double getP() {
+        return p;
+    }
 
     /**
      * PID setup, required to run before in implementing pid in code.
@@ -129,7 +140,11 @@ public abstract class FlytMotorController {
      * Method to be called in periodic of Subsystem the Controller is used in.
      * This updates the dashboard values.
      */
-    public void updateDashboard() {
-        controllerDashboard.update();
-    }   
+    public void updateLogger() {
+        controllerLogger.update();
+    }
+
+    public double getDouble(String doubleName) {
+        return controllerLogger.getDouble(doubleName);
+    }
 }

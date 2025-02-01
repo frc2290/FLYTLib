@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.networktables.GenericPublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.PubSubOption;
 import edu.wpi.first.networktables.Topic;
 
 public class FlytDashboardVariable {
@@ -43,6 +44,7 @@ public class FlytDashboardVariable {
 
     public void addIntegerSupplier(Supplier<Integer> m_supplier) {
         intSupplier = m_supplier;
+        
         topic = inst.getIntegerTopic(name);
         publisher = topic.genericPublish("int");
         type = 1;
@@ -53,6 +55,7 @@ public class FlytDashboardVariable {
         topic = inst.getDoubleTopic(name);
         publisher = topic.genericPublish("double");
         type = 2;
+        addDoubleSubscriber(name);
     }
 
     public void addStringSupplier(Supplier<String> m_supplier) {

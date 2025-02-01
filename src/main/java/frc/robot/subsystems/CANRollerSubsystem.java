@@ -49,9 +49,16 @@ public class CANRollerSubsystem extends SubsystemBase {
     //update dashaboard
     //rollerDashboard.update();
 
-    rollerMotor.updateDashboard();
     //setpoint update here
     //check for the dashboard input and the extisiting values, if so update pid tune
+
+    double temp = rollerMotor.getDouble("P");
+    if (temp != rollerMotor.getP()) {
+      rollerMotor.pidTune(temp, 0.0, 0.0, 0.0);
+      System.out.println(rollerMotor.getP());
+    }
+
+    rollerMotor.updateLogger();
   }
 
   /** This is a method that makes the roller spin */

@@ -226,7 +226,7 @@ public class SparkMaxController extends FlytMotorController {
      * @param d - derivitive
      * @param ff - velocity feedfarward
      */
-    public void pidTune(double p, double i, double d, double ff){
+    /*public void pidTune(double p, double i, double d, double ff){
 
         if (pidREADY) {
             
@@ -243,7 +243,7 @@ public class SparkMaxController extends FlytMotorController {
             }
         }
         //ERROR IF PID SETUP WASN'T USED BEFORE
-    }
+    }*/
 
     /**
      * PID setup, required to run before in implementing pid in code.

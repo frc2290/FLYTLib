@@ -82,7 +82,7 @@ public class FlytLogger {
 
     public double getDouble(String m_name) {
         for (FlytDashboardVariable item : pubs) {
-            if (item.getName().equals(m_name)) {
+            if (item.getName().equals("/" + name + "/" + m_name)) {
                 return item.getDouble();
             }
         }
